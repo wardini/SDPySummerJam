@@ -1,5 +1,5 @@
-#June 29, 2024
-This is the San Diego Python Pygame Summer Jam contest entry.
+# San Diego Python Pygame Summer Jam contest entry.
+## June 29, 2024
 The theme of this game jam is "Interstellar".
 Our brainstorming session led us toward a game about visualizing
 and tracing constellations in the night sky.
@@ -28,3 +28,12 @@ A typical game loop in pygame looks like this:
 - Update all the game states (run game logic, move players, play sounds, etc.)
 - Draw all the graphics
 - Update the screen
+
+A typical element in the game has these methods
+
+- Initialization
+  - Location of the item
+  - whatever is unique about this element
+- reset (for replay of the level)
+- update(dt)  Update movement or states (dt is in milliseconds)
+- render(window)  Draw the item to the graphics window
