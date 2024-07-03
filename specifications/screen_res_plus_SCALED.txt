@@ -1,0 +1,10 @@
+To handle different screen resolutions I think we may need to scale images properly
+While pygame does some of this scaling using pygame.SCALED, I don't think it will 
+change an image I blit to the screen.  While SCALED will do some automatic scaling,
+this applies to scaling UP to a higher resolution.  But won't fixe scaling down to
+a lower resolution.
+
+For scaling down, when loading levels, we need to scale images and coords consistently.
+Then if we are saving levels, we scale back up to the full (max) resolution of our game.
+
+Then we can try scaling up on an even high resolution display like my laptop.

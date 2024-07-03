@@ -1,0 +1,77 @@
+This tries to describe the constellation book.
+This is the book that holds all the constellations
+that the player is looking for.  It contains
+for each constellation, clues about the constellation
+so that they can try to trace the constellation in the
+collection of stars shown on the screen.
+
+This book has a number of states.  A state can be encoded
+simply with a state variable (self.state) and just be a text
+word indicating the state of the book.  Let's describe a number
+of states that the book likely will have.
+
+self.state is one of:
+    "closed"
+    "open"
+
+when the state is closed, then the book is shown as a simple icon in the
+lower left of the screen.  (A simple notebook that someone might bring
+to their outing to view constellations)
+
+when the state is open then the book is open and covers much of the 
+screen.  It will be open to the current page of whatever the player
+is currently working on.  When the book is open there is a page # 
+which is just a variable self.page_number that indicates the page
+and therefore the constellation that the player is working on.  Three new
+icons appear on the bottom of the book <-,"close", and -> so they can flip
+pages in the book to get to new constellations to work on or close the book.
+There is a graphic on the page that gives the clues to the constellation
+being worked on.  It could be the greek graphic with stars and segments shown,
+just the graphic, or just the segments, whatever we have time to generate.
+The page should have the name of the constellation as well.
+
+
+The code will look something like this:
+
+class book:
+    def __init__(self):
+        self.icon = pygame.load_image("book_icon.png")
+        self.page_number = 0
+        self.state = "closed"
+        for each page in the page graphics
+            load all page graphics as a list
+        
+    def handle_event(self,event):
+
+        if self.state == "closed":
+            if mouse_button_down and event in icon_area:
+                self.state = "open"
+        elif self.state == "open":
+            if left button clicked
+                self.page_number -= 1
+                self.open_page()
+            elif right button clicked
+                self.page_number += 1
+                self.open_page()
+            elif "close" button clicked:
+                self.staet = "closed"
+
+    def update(self,dt):
+        # nothing to do because no animation really
+        # if you think of animation you can do then
+        # you can put some logic here to handle it
+        # for instance, suppose you animate the page
+        # of the book being turned.  In that case
+        # you take dt and comput the distance that
+        # the page turned and set parameters for new
+        # locations of drawing the page being turned.
+
+    def draw(self,screen):
+        if self.state == "closed":
+            draw book icon
+        elif self.state == "open":
+            draw page[self.page_number]
+            draw word constellation name
+            draw word "close"
+            draw "<-"
+            draw "->"

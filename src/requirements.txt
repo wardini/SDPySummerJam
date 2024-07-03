@@ -1,0 +1,4 @@
+pygame-ce==2.5.0
+pygbag==0.9.1
+setuptools==69.5.1
+wheel==0.43.0

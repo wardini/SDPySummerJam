@@ -1,0 +1,46 @@
+This document tries to describe the specification
+for a constellation segment as drawn by the game player
+
+Class Segement:
+    def __init__(star1):
+
+        self.star1 = star1
+
+    def add_star2(star2):
+        self.star2 = star2
+
+    def update(dt):
+        probably nothing to do here
+
+
+    def draw(screen)
+        draw a line between star 1 and 2
+
+
+
+Another element to specify is the rubber band.
+I would not confuse a rubber band with the segment.
+A rubber band is the case where the player has selected
+a first star by clicking it with the press of a click.
+The rubber band is active as long as the click does not
+release.
+
+This class only exists as a single entity, not multiple of these.
+So it could actually be easily written into the gameplay logic.
+    
+
+class Rubber_Band:
+    def __init__(star1):
+        self.star1 = star1
+
+    def update(dt):
+        pass
+
+    def event(event)
+        if button_up:
+            cancel
+        elif new position
+            position2 = event.pos
+
+    def draw(screen)
+        draw a line between star1 and position2

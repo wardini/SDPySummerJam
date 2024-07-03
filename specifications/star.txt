@@ -1,0 +1,33 @@
+
+
+
+This tries to describe the specification for a star within the game
+
+
+Main variables for the star class
+    Location x,y
+
+
+Graphics
+    Twingle animation
+    Mouse is near graphics
+    Success animation ???
+
+    
+
+Methods
+    init (x,y)
+    reset()
+        clear all states
+    update(dt)
+        if in twinkle mode, update twinkle
+    check_near(mouse x, mouse y)
+        if mouse near star
+            set mouse_near_flag
+    draw(screen)
+        if twinkle
+            draw twinkle graphics
+        if mouse_near_flag
+            draw mouse near effects
+
+
