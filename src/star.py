@@ -47,8 +47,15 @@ class Star:
     def update(self, dt):
         pass
     
-    def check_near(self, mouse_loc):
+    def check_near(self, mouse_loc, dist_limit = 5):
+        # Check if actual collision
         self.mouse_near = self.rect.collidepoint(mouse_loc)
+
+        # check if current mouse position "near" current star loc
+        if not self.mouse_near:
+            if (abs(mouse_loc[0] - self.x_pos) <= dist_limit) or (abs(mouse_loc[1] - self.y_pos) <= dist_limit):
+                # mouse within "close" distance limit
+                self.mouse_near = True
     
     def add_neighbor(self, new_neighbor: Star):
         self.neighbors.append(new_neighbor)
@@ -67,10 +74,10 @@ class Star:
             pygame.draw.rect(screen, pygame.Color("yellow"),self.rect,2)
         pass
     
-    def get_pos(self,):
+    def get_pos(self):
         return((self.x_pos, self.y_pos))
     
-    def get_state(self,):
+    def get_state(self):
         return {
             "position": (self.x_pos, self.y_pos),
             "mouse_near": self.mouse_near,
