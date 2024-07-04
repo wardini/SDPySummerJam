@@ -1,8 +1,8 @@
 
 glbls = {
 
-'WIDTH' : 1024,
-'HEIGHT' : 768,
+'WIDTH' : 1920,
+'HEIGHT' :1080,
 
 'VERSION' : 0.1,
 'COMPATABLE_VERSIONS' : [],

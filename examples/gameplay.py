@@ -29,6 +29,9 @@ class Gameplay:
 
         self.play_state = "game"
 
+        self.starpic = pygame.image.load('virgo.png').convert()
+        self.forgpic1 = pygame.image.load('foreground1.png').convert_alpha()
+
     def startup(self):
         self.play_state = "game"
 
@@ -54,6 +57,10 @@ class Gameplay:
 
     def draw(self, window):
         window.fill(pygame.Color("black"))
+
+        window.blit(self.starpic,self.starpic.get_rect())
+        window.blit(self.forgpic1,(0,self.glbls['HEIGHT']-100))
+        window.blit(self.forgpic1,(1024,self.glbls['HEIGHT']-100))
 
         self.glbls['ti_fps'].change_text(str(self.glbls['frame_rate']))
         self.glbls['ti_fps'].render_text(window)

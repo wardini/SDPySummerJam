@@ -107,6 +107,8 @@ class Editor:
                             output_dict = {}
                             output_dict["stars"]=[]
                             output_dict["segments"]=[]
+                            output_dict["starmap"]=self.const_names[self.lev_num]+".png"
+                            output_dict["solution"]="solution_"+self.const_names[self.lev_num]+".png"
                             for s in self.stars:
                                 output_dict["stars"].append([s.x,s.y])
                             for e in self.segments:
