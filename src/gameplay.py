@@ -2,6 +2,8 @@ import pygame
 from txt_item import Txt_item
 #from level import Level
 
+from star import Star
+
 class Gameplay:
     def __init__(self,glbls):
         self.glbls = glbls
@@ -26,8 +28,11 @@ class Gameplay:
 
         self.play_state = "game"
 
+        self.test_star = Star(100.,100.)
+
     def startup(self):
         self.play_state = "game"
+        self.test_star.reset()
 
     def update(self,dt):
         pass
@@ -42,9 +47,12 @@ class Gameplay:
             elif event.key == pygame.K_q:
                 self.done = True
                 self.quit = True
+        self.test_star.check_near(pygame.mouse.get_pos())
 
     def draw(self, window):
         window.fill(pygame.Color("black"))
 
         self.glbls['ti_fps'].change_text(str(self.glbls['frame_rate']))
         self.glbls['ti_fps'].render_text(window)
+
+        self.test_star.draw(window)

@@ -1,6 +1,6 @@
 # Written by Ben Abrams <abrams (dot) benjamin (at) gmail>
 import pygame
-import segments
+#import segments
 
 """
 Methods
@@ -57,8 +57,8 @@ class Star:
                 # mouse within "close" distance limit
                 self.mouse_near = True
     
-    def add_neighbor(self, new_neighbor: Star):
-        self.neighbors.append(new_neighbor)
+    #def add_neighbor(self, new_neighbor: Star):
+    #    self.neighbors.append(new_neighbor)
 
     def add_segment(self, new_segment):
         self.connected_segments.append(new_segment)
