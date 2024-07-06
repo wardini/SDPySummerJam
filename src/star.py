@@ -29,11 +29,7 @@ class Star:
         self.y_pos = y_pos
 
         # initialize states
-        self.mouse_near = False
-        self.selected = False
-        self.connected = False
-        self.neighbors = []
-        self.connected_segments = []
+        self.reset()
         self.color = "white"
         self.rect = pygame.Rect(self.x_pos-4, self.y_pos-4, 9, 9)
 
@@ -71,7 +67,7 @@ class Star:
         # connected state
         else:
         # default state
-            pygame.draw.rect(screen, pygame.Color("yellow"),self.rect,2)
+            pygame.draw.rect(screen, pygame.Color(self.color),self.rect,2)
         pass
     
     def get_pos(self):
