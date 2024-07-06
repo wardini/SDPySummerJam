@@ -1,6 +1,6 @@
 # Written by Ben Abrams <abrams (dot) benjamin (at) gmail>
 import pygame
-import segments
+# import segments
 
 """
 Methods
@@ -31,7 +31,9 @@ class Star:
         # initialize states
         self.reset()
         self.color = "white"
-        self.rect = pygame.Rect(self.x_pos-4, self.y_pos-4, 9, 9)
+        self.rect = pygame.Rect(self.x_pos-4, self.y_pos-4, 9, 9) # this rect might be the wrong size
+        self.vector = pygame.math.Vector2(self.x_pos, self.y_pos)
+        self.vec_dist = 100000
 
     def reset(self):
         self.mouse_near = False
@@ -43,17 +45,20 @@ class Star:
     def update(self, dt):
         pass
     
-    def check_near(self, mouse_loc, dist_limit = 5):
+    def check_near(self, mouse_loc, dist_limit = 15.0):
         # Check if actual collision
         self.mouse_near = self.rect.collidepoint(mouse_loc)
 
         # check if current mouse position "near" current star loc
         if not self.mouse_near:
-            if (abs(mouse_loc[0] - self.x_pos) <= dist_limit) or (abs(mouse_loc[1] - self.y_pos) <= dist_limit):
+            mouse_vec = pygame.math.Vector2(mouse_loc)
+            self.vec_dist = self.vector.distance_to(mouse_vec)
+
+            if self.vec_dist <= dist_limit:
                 # mouse within "close" distance limit
                 self.mouse_near = True
     
-    def add_neighbor(self, new_neighbor: Star):
+    def add_neighbor(self, new_neighbor):
         self.neighbors.append(new_neighbor)
 
     def add_segment(self, new_segment):
@@ -80,7 +85,8 @@ class Star:
             "selected": self.selected,
             "connected": self.connected,
             "neighbors": self.neighbors,
-            "connected_segments": self.connected_segments
+            "connected_segments": self.connected_segments,
+            "color": self.color
         }
     
     def get_mouse_near(self,):
@@ -91,7 +97,6 @@ class Star:
             msg = f"Attempted to make a Star with positions of the wrong type! x_pos: {x_pos}, y_pos {y_pos}"
             print(msg)
             raise StarPositionError(msg, x_pos, y_pos)
-        #TODO check for x, y positions out of range based on game's screen resolution
 
 
 class StarPositionError(Exception):
