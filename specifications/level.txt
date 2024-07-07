@@ -1,0 +1,56 @@
+
+This is the specification for the level class
+
+This is the current plan.
+The gameplay screen will instantiate all of the levels inside __init__.
+The levels will need to be identified as a list like they are in the
+constellations folder "constellations.json".  Or some other way.
+
+This makes development independent and we can move faster.
+After thinking about our discussion I think we are moving in a good direction.
+    The entire game can just be a collection of levels
+    - The first level is the tutorial level
+    - The last level is the congratulations screen
+        The gameplay class asserts done and quit after the user clicks the
+        last button on the last level.
+    - We can insert as many levels as we have time to make between the first
+        and last levels.
+
+For each level
+    __init__:
+        loads it's json file and subsequently the needed image files for that level
+
+    reset:
+        will initialize everything (probably not really needed since we plan to play
+        each level only once.  But in the case a level is replayed, this would be called
+        before a replay is started.
+
+    update:
+        Any time based events.  Twinkle states of stars may happen here.
+        Hint states may update here.
+        Slowly erodes incorrectly drawn segments ??? We didn't really discuss
+        in much detail about what happens when a user draws one of these.
+
+    process_event:
+        Essentially all mouse click and drag events will get passed to
+        the level instance.  The only thing that doesn't go to the level
+        are some Quit events that happen when the user clicks the window
+        X button.
+
+    draw:
+        Draw everything
+
+    Other potential helpful methods
+
+    check_if_done:
+        Checks to see if all segments are drawn correctly.
+        returns true or false
+
+
+    States can change in update or process event.  It doesn't really matter
+    as long as you have a good method of keeping track of them.
+
+
+    You might want another class I would call rubber_band
+    This class handles the states and drawing of the not-yet-completed
+    segment as the user tries to drag it form one star to the next.
