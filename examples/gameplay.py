@@ -79,8 +79,8 @@ class Gameplay:
         window.fill(pygame.Color("black"))
 
         window.blit(self.starpic,self.starpic.get_rect())
-        window.blit(self.forgpic1,(0,self.glbls['HEIGHT']-100))
-        window.blit(self.forgpic1,(1024,self.glbls['HEIGHT']-100))
+        window.blit(self.forgpic1,(0,self.glbls['HEIGHT']-150))
+        #window.blit(self.forgpic1,(1024,self.glbls['HEIGHT']-100))
 
         self.glbls['ti_fps'].change_text(str(self.glbls['frame_rate']))
         self.glbls['ti_fps'].render_text(window)

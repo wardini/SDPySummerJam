@@ -40,7 +40,7 @@ class Level:
 
         # finish button
         locx = self.glbls['WIDTH']-200
-        locy = self.glbls['HEIGHT']-50
+        locy = 50
         self.done_button = Txt_item("Next Level",(locx,locy),True,"Done",fontsize=40)
 
         self.reset()
