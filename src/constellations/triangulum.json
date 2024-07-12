@@ -1,0 +1,40 @@
+{
+    "art_transforms": {
+        "scaling": 2.5228286933230066,
+        "rotation": 159.0,
+        "trans_x": 345,
+        "trans_y": -245,
+        "alpha": 56
+    },
+    "stars": [
+        [
+            926,
+            288
+        ],
+        [
+            1021,
+            289
+        ],
+        [
+            1008,
+            598
+        ]
+    ],
+    "segments": [
+        [
+            0,
+            2
+        ],
+        [
+            2,
+            1
+        ],
+        [
+            1,
+            0
+        ]
+    ],
+    "artimage": "triangulum.png",
+    "starmap": "triangulum.png",
+    "solution": "solution_triangulum.png"
+}
