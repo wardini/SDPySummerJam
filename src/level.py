@@ -101,10 +101,16 @@ class Level:
                 new_segment = Segment(self.anchor_star_idx, self.dest_star_idx)
                 for segment in self.goal_segments:
                     if new_segment == segment:
+                        add_segment = True
                         new_segment.set_position(self.stars)
-                        self.found_segments.append(new_segment)
+                        for fs in self.found_segments:
+                            if new_segment == fs:
+                                add_segment = False
+                                break
+                        if add_segment:
+                            self.found_segments.append(new_segment)
+                            self.click_sound.play()
                         self.stars[self.anchor_star_idx].set_selected(False)
-                        self.click_sound.play()
                         break
                 self.dest_star_idx = None
                 self.anchor_star_idx = None
