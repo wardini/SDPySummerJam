@@ -54,26 +54,28 @@ class Level:
                     self.current_band = Band(event.pos, self.glbls)
                     self.delete_band = False
                 # see if we clicked hear a star
-                for idx in (range(0, len(self.stars) - 1)):
+                for idx in (range(0, len(self.stars))):
                     # because Segments are only aware of stars by their indices in
                     # the constellation JSON file, we must use those index values to create
                     # the preliminary segment
                     if self.stars[idx].get_mouse_near():
                         self.anchor_star_idx = idx
                         self.stars[self.anchor_star_idx].set_selected(True)
+                        break
                 if self.complete:
                     if self.t_done_button.check_select(event.pos):
                         self.done = True
         if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
             if self.current_band:                
                 # self.delete_band = True
-                for idx in (range(0, len(self.stars) - 1)):
+                for idx in (range(0, len(self.stars))):
                     # because Segments are only aware of stars by their indices in
                     # the constellation JSON file, we must use those index values to create
                     # the preliminary segment
                     self.stars[idx].set_selected(False)
                     if self.stars[idx].get_mouse_near():
                         self.dest_star_idx = idx
+                        break
                 del self.current_band
                 self.current_band = None
         
@@ -81,9 +83,9 @@ class Level:
     def update(self,dt):
         if self.state == "play":
             self.time += dt
-            if self.time > 4000:
-                self.state = "fade in"
-                self.cur_alpha = 0
+            # if self.time > 4000:
+            #     self.state = "fade in"
+            #     self.cur_alpha = 0
 
             for star in self.stars:
                 star.update(dt)
@@ -92,27 +94,20 @@ class Level:
                 self.current_band.update(dt)
 
             # create new segment if necessary
-            if self.dest_star_idx and self.anchor_star_idx:
+            if self.dest_star_idx is not None and self.anchor_star_idx is not None and self.dest_star_idx != self.anchor_star_idx:
                 new_segment = Segment(self.anchor_star_idx, self.dest_star_idx)
-                new_segment.set_position(self.stars)
-                self.found_segments.append(new_segment)
-                self.stars[self.anchor_star_idx].set_selected(False)
+                for segment in self.goal_segments:
+                    if new_segment == segment:
+                        new_segment.set_position(self.stars)
+                        self.found_segments.append(new_segment)
+                        self.stars[self.anchor_star_idx].set_selected(False)
+                        break
                 self.dest_star_idx = None
                 self.anchor_star_idx = None
-                # # see if segment is correct
-                # for segment in self.goal_segments:
-                #     if new_segment == segment:
-                #         new_segment.set_position(self.stars)
-                #         self.found_segments.append(new_segment)
-                #         self.stars[self.anchor_star_idx].set_selected(False)
-                #         self.dest_star_idx = None
-                #         self.anchor_star_idx = None
-                        
 
             # check if game done
-            if self.found_segments == self.goal_segments:
-                self.complete = True
-                self.state = "complete"
+            if len(self.found_segments) == len(self.goal_segments):
+                self.state = "fade in"
 
         elif self.state == "fade in":
             self.cur_alpha += 1
@@ -137,11 +132,11 @@ class Level:
         for star in self.stars:
             star.draw(window)
 
-        # for segment in self.found_segments:
-        #     segment.draw(window)
-
-        for segment in self.goal_segments:
+        for segment in self.found_segments:
             segment.draw(window)
+
+        # for segment in self.goal_segments:
+        #     segment.draw(window)
 
         if self.current_band:
             self.current_band.draw(window)
