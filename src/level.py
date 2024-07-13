@@ -26,6 +26,9 @@ class Level:
 
         self._load_objects()
 
+        self.click_sound = pygame.mixer.Sound("audio/click.ogg")
+        self.click_sound.set_volume(1)
+
         self.reset()
 
     def reset(self):
@@ -101,6 +104,7 @@ class Level:
                         new_segment.set_position(self.stars)
                         self.found_segments.append(new_segment)
                         self.stars[self.anchor_star_idx].set_selected(False)
+                        self.click_sound.play()
                         break
                 self.dest_star_idx = None
                 self.anchor_star_idx = None
