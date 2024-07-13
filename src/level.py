@@ -83,15 +83,15 @@ class Level:
     def update(self,dt):
         if self.state == "play":
             self.time += dt
-            # if self.time > 4000:
-            #     self.state = "fade in"
-            #     self.cur_alpha = 0
 
             for star in self.stars:
                 star.update(dt)
 
             if self.current_band:
                 self.current_band.update(dt)
+
+            for segment in self.goal_segments:
+                segment.update(dt)
 
             # create new segment if necessary
             if self.dest_star_idx is not None and self.anchor_star_idx is not None and self.dest_star_idx != self.anchor_star_idx:
@@ -132,11 +132,11 @@ class Level:
         for star in self.stars:
             star.draw(window)
 
+        for segment in self.goal_segments:
+            segment.draw(window, draw_type="goal")
+
         for segment in self.found_segments:
             segment.draw(window)
-
-        # for segment in self.goal_segments:
-        #     segment.draw(window)
 
         if self.current_band:
             self.current_band.draw(window)
