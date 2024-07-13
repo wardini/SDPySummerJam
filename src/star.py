@@ -39,11 +39,12 @@ class Star:
         self.mouse_near = False
         self.selected = False
         self.connected = False
-        self.neighbors = []
-        self.connected_segments = []
     
     def update(self, dt):
         pass
+    
+    def process_event(self, event):
+        self.check_near(event.pos)
     
     def check_near(self, mouse_loc, dist_limit = 15.0):
         # Check if actual collision
@@ -57,12 +58,6 @@ class Star:
             if self.vec_dist <= dist_limit:
                 # mouse within "close" distance limit
                 self.mouse_near = True
-    
-    def add_neighbor(self, new_neighbor):
-        self.neighbors.append(new_neighbor)
-
-    def add_segment(self, new_segment):
-        self.connected_segments.append(new_segment)
 
     def draw(self, screen):
         if self.mouse_near:
@@ -84,8 +79,6 @@ class Star:
             "mouse_near": self.mouse_near,
             "selected": self.selected,
             "connected": self.connected,
-            "neighbors": self.neighbors,
-            "connected_segments": self.connected_segments,
             "color": self.color
         }
     
