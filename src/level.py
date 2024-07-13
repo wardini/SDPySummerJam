@@ -158,6 +158,7 @@ class Level:
         h = orig_artimage.get_height()
         iconscale = 300 / (w**2+h**2)**0.5
         self.iconimage = pygame.transform.scale_by(orig_artimage,iconscale)
+        self.iconimage = pygame.transform.rotate(self.iconimage,self.cinfo['art_transforms']['rotation'])
         self.iconlocation = (10, 50)
         
         # Create label for the level
