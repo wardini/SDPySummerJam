@@ -51,7 +51,7 @@ class Level:
             if event.button == 1:
                 # create new band if necessary
                 if not self.current_band:
-                    self.current_band = Band(event.pos)
+                    self.current_band = Band(event.pos, self.glbls)
                     self.delete_band = False
                 # see if we clicked hear a star
                 for idx in (range(0, len(self.stars) - 1)):
@@ -60,18 +60,22 @@ class Level:
                     # the preliminary segment
                     if self.stars[idx].get_mouse_near():
                         self.anchor_star_idx = idx
+                        self.stars[self.anchor_star_idx].set_selected(True)
                 if self.complete:
                     if self.t_done_button.check_select(event.pos):
                         self.done = True
-        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
             if self.current_band:                
-                self.delete_band = True
+                # self.delete_band = True
                 for idx in (range(0, len(self.stars) - 1)):
                     # because Segments are only aware of stars by their indices in
                     # the constellation JSON file, we must use those index values to create
                     # the preliminary segment
+                    self.stars[idx].set_selected(False)
                     if self.stars[idx].get_mouse_near():
                         self.dest_star_idx = idx
+                del self.current_band
+                self.current_band = None
         
 
     def update(self,dt):
@@ -86,20 +90,24 @@ class Level:
 
             if self.current_band:
                 self.current_band.update(dt)
-            
-            if self.delete_band and self.current_band and self.current_band.get_lifetime_exceeded():
-                del self.current_band
-                self.current_band = None
 
             # create new segment if necessary
             if self.dest_star_idx and self.anchor_star_idx:
                 new_segment = Segment(self.anchor_star_idx, self.dest_star_idx)
-                # see if segment is correct
-                for segment in self.goal_segments:
-                    if new_segment == segment:
-                        self.found_segments.append(new_segment)
-                        self.dest_star_idx = None
-                        self.anchor_star_idx = None
+                new_segment.set_position(self.stars)
+                self.found_segments.append(new_segment)
+                self.stars[self.anchor_star_idx].set_selected(False)
+                self.dest_star_idx = None
+                self.anchor_star_idx = None
+                # # see if segment is correct
+                # for segment in self.goal_segments:
+                #     if new_segment == segment:
+                #         new_segment.set_position(self.stars)
+                #         self.found_segments.append(new_segment)
+                #         self.stars[self.anchor_star_idx].set_selected(False)
+                #         self.dest_star_idx = None
+                #         self.anchor_star_idx = None
+                        
 
             # check if game done
             if self.found_segments == self.goal_segments:
@@ -129,7 +137,10 @@ class Level:
         for star in self.stars:
             star.draw(window)
 
-        for segment in self.found_segments:
+        # for segment in self.found_segments:
+        #     segment.draw(window)
+
+        for segment in self.goal_segments:
             segment.draw(window)
 
         if self.current_band:
@@ -174,5 +185,6 @@ class Level:
         self.goal_segments = []
         for segment in self.cinfo['segments']:
             new_segment = Segment(segment[0], segment[1])
+            new_segment.set_position(self.stars)
             self.goal_segments.append(new_segment)
 
