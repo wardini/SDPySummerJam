@@ -43,8 +43,12 @@ class Star:
     def update(self, dt):
         pass
     
+    def set_selected(self, value:bool):
+        self.selected = value
+    
     def process_event(self, event):
-        self.check_near(event.pos)
+        if event.type == pygame.MOUSEMOTION:
+            self.check_near(event.pos)
     
     def check_near(self, mouse_loc, dist_limit = 15.0):
         # Check if actual collision
@@ -62,8 +66,10 @@ class Star:
     def draw(self, screen):
         if self.mouse_near:
             # mouse near state
-            pygame.draw.rect(screen, pygame.Color("orange"),self.rect,4)
+            pygame.draw.rect(screen, pygame.Color("yellow"),self.rect,4)
+        if self.selected:
         # selected state
+            pygame.draw.rect(screen, pygame.Color("orange"),self.rect,2)
         # connected state
         else:
         # default state

@@ -1,6 +1,7 @@
 # Written by Ben Abrams <abrams (dot) benjamin (at) gmail>
 import pygame
 # import segments
+from star import Star
 
 
 class Segment:
@@ -27,12 +28,20 @@ class Segment:
             return((self.anchor_1 in other.anchors) and (self.anchor_2 in other.anchors))
         return NotImplemented
 
+    def set_position(self, stars):
+        # extract the coordinates of the anchor stars given the array of stars
+        self.anchor_1_pos = stars[self.anchor_1].get_pos()
+        self.anchor_2_pos = stars[self.anchor_2].get_pos()
 
     def reset(self):
-        pass
+        self.anchor_1_pos = None
+        self.anchor_2_pos = None
+
     
     def update(self, dt):
         pass
 
     def draw(self, screen):
-        pass
+        if self.anchor_1_pos and self.anchor_2_pos:
+            points = self.anchor_1_pos, self.anchor_2_pos
+            pygame.draw.line(screen, pygame.Color(self.color),*points,width=2)
