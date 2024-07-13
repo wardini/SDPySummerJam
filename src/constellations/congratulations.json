@@ -1,4 +1,11 @@
 {
+    "art_transforms": {
+        "scaling": 1.0,
+        "rotation": 0.0,
+        "trans_x": 0,
+        "trans_y": 0,
+        "alpha": 0
+    },
     "stars": [],
     "segments": [],
     "artimage": "congratulations.png",

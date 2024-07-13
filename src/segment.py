@@ -2,6 +2,7 @@
 import pygame
 # import segments
 from star import Star
+import random
 
 
 class Segment:
@@ -23,6 +24,8 @@ class Segment:
         # self.vector = pygame.math.Vector2(self.x_pos, self.y_pos)
         # self.vec_dist = 100000
 
+        self.hint_timer = 2500 + random.randint(0,2000)
+
     def __eq__(self, other):
         if isinstance(other, Segment):
             return((self.anchor_1 in other.anchors) and (self.anchor_2 in other.anchors))
@@ -39,9 +42,16 @@ class Segment:
 
     
     def update(self, dt):
-        pass
+        if self.hint_timer < -35:
+            self.hint_timer = 1500 + random.randint(0,1500)
+        else:
+            self.hint_timer -= dt
 
     def draw(self, screen):
         if self.anchor_1_pos and self.anchor_2_pos:
             points = self.anchor_1_pos, self.anchor_2_pos
             pygame.draw.line(screen, pygame.Color(self.color),*points,width=2)
+
+        #if self.hint_timer < 0:
+        #    points = self.anchor_1_pos, self.anchor_2_pos
+        #    pygame.draw.line(screen, pygame.Color("gray8"),*points,width=2)

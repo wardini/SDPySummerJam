@@ -1,5 +1,6 @@
 # Written by Ben Abrams <abrams (dot) benjamin (at) gmail>
 import pygame
+import random
 # import segments
 
 """
@@ -34,6 +35,7 @@ class Star:
         self.rect = pygame.Rect(self.x_pos-4, self.y_pos-4, 9, 9) # this rect might be the wrong size
         self.vector = pygame.math.Vector2(self.x_pos, self.y_pos)
         self.vec_dist = 100000
+        self.twinkle_timer = 1500 + random.randint(0,5000)
 
     def reset(self):
         self.mouse_near = False
@@ -41,7 +43,10 @@ class Star:
         self.connected = False
     
     def update(self, dt):
-        pass
+        if self.twinkle_timer < -35:
+            self.twinkle_timer = 1500 + random.randint(0,1500)
+        else:
+            self.twinkle_timer -= dt
     
     def set_selected(self, value:bool):
         self.selected = value
@@ -66,15 +71,30 @@ class Star:
     def draw(self, screen):
         if self.mouse_near:
             # mouse near state
-            pygame.draw.rect(screen, pygame.Color("yellow"),self.rect,4)
+            #pygame.draw.rect(screen, pygame.Color("yellow"),self.rect,4)
+            pygame.draw.line(screen, pygame.Color("yellow"),(self.x_pos-4,self.y_pos),(self.x_pos+4,self.y_pos))
+            pygame.draw.line(screen, pygame.Color("yellow"),(self.x_pos,self.y_pos-4),(self.x_pos,self.y_pos+4))
+            pygame.draw.line(screen, pygame.Color("yellow"),(self.x_pos-2,self.y_pos-2),(self.x_pos+2,self.y_pos+2))
+            pygame.draw.line(screen, pygame.Color("yellow"),(self.x_pos-2,self.y_pos+2),(self.x_pos+2,self.y_pos-2))
+
         if self.selected:
         # selected state
-            pygame.draw.rect(screen, pygame.Color("orange"),self.rect,2)
+            #pygame.draw.rect(screen, pygame.Color("orange"),self.rect,2)
+
+            # make a simple plus sign
+            pygame.draw.line(screen, pygame.Color("orange"),(self.x_pos-4,self.y_pos),(self.x_pos+4,self.y_pos))
+            pygame.draw.line(screen, pygame.Color("orange"),(self.x_pos,self.y_pos-4),(self.x_pos,self.y_pos+4))
+            pygame.draw.line(screen, pygame.Color("orange"),(self.x_pos-2,self.y_pos-2),(self.x_pos+2,self.y_pos+2))
+            pygame.draw.line(screen, pygame.Color("orange"),(self.x_pos-2,self.y_pos+2),(self.x_pos+2,self.y_pos-2))
         # connected state
-        else:
+        #else:
         # default state
-            pygame.draw.rect(screen, pygame.Color(self.color),self.rect,2)
-        pass
+        #    pygame.draw.rect(screen, pygame.Color(self.color),self.rect,2)
+
+        # twinkle
+        if self.twinkle_timer < 0:
+            pygame.draw.rect(screen, pygame.Color("black"),self.rect,5)
+
     
     def get_pos(self):
         return((self.x_pos, self.y_pos))
