@@ -8,5 +8,6 @@ glbls = {
 'COMPATABLE_VERSIONS' : [],
 
 'start_state' : 'Gameplay',
+'band_lifetime': 2000,
 
 }

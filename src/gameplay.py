@@ -1,7 +1,7 @@
 import pygame
 from txt_item import Txt_item
 #from level import Level
-from dummy_level import Level
+from level import Level
 import json
 from insects import Insects
 from owl import Owl
