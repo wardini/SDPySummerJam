@@ -27,7 +27,7 @@ class Level:
         self._load_objects()
 
         self.click_sound = pygame.mixer.Sound("audio/click.ogg")
-        self.click_sound.set_volume(1)
+        self.click_sound.set_volume(0.3)
 
         self.reset()
 

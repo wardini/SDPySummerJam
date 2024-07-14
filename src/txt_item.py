@@ -5,7 +5,7 @@ class Txt_item():
         self.text = txt
         self.position = position
         self.selectable = selectable
-        self.font = pygame.font.SysFont('timesnewroman',fontsize)
+        self.font = pygame.font.SysFont('freesansbold',fontsize)
         self.text_surface = self.font.render(self.text, True, pygame.Color("white"))
         self.rect = self.text_surface.get_rect(topleft=(self.position))
         self.action = action
